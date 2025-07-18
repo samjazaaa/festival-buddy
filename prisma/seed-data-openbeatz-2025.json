@@ -1,0 +1,117 @@
+{
+  "stages": [
+    {
+      "stage": "Caldera",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": [
+            {
+              "artist": "Paul Keen",
+              "start": "2025-07-25T14:00:00+02:00",
+              "end": "2025-07-25T15:00:00+02:00"
+            },
+            {
+              "artist": "Ely Oaks",
+              "start": "2025-07-25T15:00:00+02:00",
+              "end": "2025-07-25T15:45:00+02:00"
+            }
+          ]
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    },
+    {
+      "stage": "Stone-Lands",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": []
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    },
+    {
+      "stage": "Zone 3",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": []
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    },
+    {
+      "stage": "Magical Forest",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": []
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    },
+    {
+      "stage": "Goa Garden",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": []
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    },
+    {
+      "stage": "Dark-Woods",
+      "days": [
+        {
+          "day": "Fr",
+          "acts": []
+        },
+        {
+          "day": "Sa",
+          "acts": []
+        },
+        {
+          "day": "Su",
+          "acts": []
+        }
+      ]
+    }
+  ]
+}

@@ -12,6 +12,41 @@ datasource db {
 }
 
 model User {
-  id   String @id @default(cuid())
-  name String
+  id          String   @id @default(cuid())
+  name        String   @unique
+  password    String
+  interested  Act[]    @relation("interested")
+  going       Act[]    @relation("going")
+  current     Stage?   @relation(fields: [stageId], references: [id])
+  stageId     String?
+  lastUpdated DateTime @default(now())
+}
+
+enum Day {
+  Mo
+  Tu
+  We
+  Th
+  Fr
+  Sa
+  Su
+}
+
+model Act {
+  id              String   @id @default(cuid())
+  artist          String
+  day             Day // TODO enum?
+  start           DateTime
+  end             DateTime
+  stage           Stage    @relation(fields: [stageId], references: [id])
+  interestedUsers User[]   @relation("interested")
+  goingUsers      User[]   @relation("going")
+  stageId         String
+}
+
+model Stage {
+  id           String @id @default(cuid())
+  name         String
+  acts         Act[]
+  currentUsers User[]
 }

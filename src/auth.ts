@@ -2,28 +2,17 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import type { User } from "@/lib/definitions";
 import bcrypt from "bcrypt";
-import sqlite3 from "sqlite3";
-import path from "path";
+import prisma from "./lib/prisma";
 
-// https://krimsonhart.medium.com/how-i-built-my-portfolio-using-next-js-and-sqlite-db-part-2-37595ca4dc40
-const dbPath = path.join(process.cwd(), "users.db");
-const db = new sqlite3.Database(
-  dbPath,
-  sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
-  (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-  }
-);
-
-async function getUser(user: string): Promise<User | undefined> {
+async function getUser(user: string) {
   try {
     // TODO replace with correct sqlite syntax
-    const user = await db<User[]>`SELECT * FROM users WHERE user=$(user)`;
-    return user[0];
+    const userObj = await prisma.user.findUniqueOrThrow({
+      where: { name: user },
+    });
+
+    return userObj;
   } catch (error) {
     console.error("Failed to fetch user:", error);
     throw new Error("Failed to fetch user.");
