@@ -1,3 +1,4 @@
+import LoginForm from "@/components/LoginForm";
 import { Suspense } from "react";
 
 // https://nextjs.org/learn/dashboard-app/adding-authentication
