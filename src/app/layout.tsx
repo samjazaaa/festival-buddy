@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+import DropdownModeToggle from "@/components/DropdownModeToggle";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,6 +37,23 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <header className="w-full bg-green-600 h-16 flex items-center justify-between p-3">
+            <div className="w-9 h-9 bg-zinc-700 rounded-lg flex items-center justify-center">
+              FB
+            </div>
+            <div>OpenBeatz 2025</div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="w-9 h-9">
+                  <Menu />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownModeToggle />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </header>
           {children}
         </ThemeProvider>
       </body>
