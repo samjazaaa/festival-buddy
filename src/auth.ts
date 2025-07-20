@@ -7,7 +7,6 @@ import prisma from "./lib/prisma";
 
 async function getUser(user: string) {
   try {
-    // TODO replace with correct sqlite syntax
     const userObj = await prisma.user.findUniqueOrThrow({
       where: { name: user },
     });
