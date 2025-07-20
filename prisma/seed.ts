@@ -7,15 +7,15 @@ import seedData from "./seed-data-openbeatz-2025.json";
 
 const prisma = new PrismaClient();
 
-// Test user with pw 12345
-const userData: Prisma.UserCreateInput[] = [
-  {
-    name: "Test",
-    password: await bcrypt.hash("123456", 12),
-  },
-];
-
 export async function main() {
+  // Test user with pw 12345
+  const userData: Prisma.UserCreateInput[] = [
+    {
+      name: "Test",
+      password: await bcrypt.hash("123456", 12),
+    },
+  ];
+
   for (const u of userData) {
     await prisma.user.create({ data: u });
   }
