@@ -11,7 +11,7 @@ export async function main() {
   // Test user with pw 12345
   const userData: Prisma.UserCreateInput[] = [
     {
-      name: "Test",
+      name: "testuser",
       password: await bcrypt.hash("123456", 12),
     },
   ];
