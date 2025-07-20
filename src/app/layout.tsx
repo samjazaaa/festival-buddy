@@ -54,7 +54,9 @@ export default function RootLayout({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          {children}
+          <div className="flex items-center justify-center md:h-screen p-4 w-full max-w-[400px] mx-auto">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
