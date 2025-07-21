@@ -102,9 +102,9 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
   };
 
   return (
-    <div className="bg-teal-400 w-full">
+    <div className="w-full">
       {/* Header */}
-      <div className="grid grid-cols-7 gap-px bg-zinc-800 text-white text-xs rounded-t-lg">
+      <div className="grid grid-cols-7 gap-1 bg-zinc-800 text-white text-xs rounded-t-lg ">
         <div className="flex items-center justify-center text-center p-2">
           Uhrzeit
         </div>
@@ -121,7 +121,7 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
       {/* Acts */}
       <div
         className={cn(
-          "grid grid-flow-row grid-cols-7 gap-2 bg-zinc-700 text-white text-xs rounded-b-lg"
+          "grid grid-flow-row grid-cols-7 gap-1 bg-zinc-700 text-white text-xs rounded-b-lg pt-3"
         )}
         style={{
           gridTemplateRows: `repeat(${timeslots.length * 4}, 1rem)`,
@@ -171,7 +171,7 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
                   return (
                     <div
                       key={foundAct.id}
-                      className="text-center flex items-center justify-center bg-violet-400"
+                      className="text-center flex items-center justify-center bg-violet-400 p-2 rounded-lg break-all overflow-hidden"
                       style={{
                         gridColumnStart: colStart,
                         gridColumnEnd: colEnd,
