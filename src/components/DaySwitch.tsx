@@ -1,7 +1,7 @@
 "use client";
 
 import type { $Enums, Day } from "@/generated/prisma";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
