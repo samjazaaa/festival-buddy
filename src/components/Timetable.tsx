@@ -14,11 +14,11 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
   const queryClient = useQueryClient();
 
   const [bounds, setBounds] = useState<{
-    start: Date | undefined;
-    end: Date | undefined;
+    start: number | undefined;
+    end: number | undefined;
   }>({
-    start: new Date("2025-07-25T14:00:00+02:00"),
-    end: new Date("2025-07-26T02:00:00+02:00"),
+    start: 14,
+    end: 2,
   });
 
   const [timeslots, setTimeslots] = useState<number[]>([]);
@@ -63,7 +63,10 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
       }
     }
 
-    setBounds({ start: start, end: end });
+    setBounds({
+      start: new Date(start).getHours(),
+      end: new Date(end).getHours(),
+    });
 
     const startingHourInTimeZone: number = new Date(start).getHours();
     const endHourInTimeZone: number = new Date(end).getHours();
@@ -82,22 +85,20 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
     setTimeslots(timeslots);
   }, [acts]);
 
-  const getActs = (acts: Act[], hour: number, stage: Stage) => {
-    // get the act that starts in the specified hour on the specified stage if such an act exists
+  const getActsForStage = (acts: Act[], stage: Stage) => {
+    // get the acts that start on the specified stage
     return acts.filter((act) => {
-      return (
-        new Date(act.start).getHours() === hour && act.stageId === stage.id
-      );
+      return act.stageId === stage.id;
     });
   };
 
-  // Calculates the required timeslots (quarter hours) and returns the fitting row span class
-  const getRowSpanClass = (act: Act) => {
+  // Calculates the required timeslots (quarter hours)
+  const getSlots = (act: Act) => {
     const startDate = new Date(act.start);
     const endDate = new Date(act.end);
     const diffMs = endDate.getTime() - startDate.getTime();
     const slots = Math.floor(Math.round(diffMs / 60000) / 15);
-    return `row-span-${slots}`;
+    return slots;
   };
 
   return (
@@ -118,42 +119,76 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
           ))}
       </div>
       {/* Acts */}
-      <div className="grid grid-cols-7 gap-3 bg-zinc-700 text-white text-xs rounded-b-lg">
+      <div
+        className={cn(
+          "grid grid-flow-column grid-cols-7 gap-2 bg-zinc-700 text-white text-xs rounded-b-lg",
+          `[grid-template-rows:repeat(${timeslots.length * 4},_3rem)]`
+          //`grid-rows-${timeslots.length * 4}`
+        )}
+        /* style={{
+          gridTemplateRows: `repeat(${timeslots.length * 4}, 3rem)`,
+        }} */
+      >
         {actsLoading ? (
           <div>Loading...</div>
         ) : (
-          acts &&
-          timeslots.map((timeslot) => (
+          acts && (
             <>
-              <div
-                className="row-span-4 text-center bg-orange-500"
-                key={timeslot}
-              >
-                {timeslot}:00 Uhr
-              </div>
-              {stages!.map((stage) => {
-                const foundActs = getActs(acts, timeslot, stage);
+              {timeslots.map((timeslot, index) => (
+                <div
+                  className={cn(
+                    "text-center bg-orange-500 col-start-1 flex items-center justify-center ",
+                    `row-start-${index * 4 + 1}`,
+                    `row-end-${index * 4 + 2}`
+                  )}
+                  key={timeslot}
+                >
+                  {timeslot}:00 Uhr
+                </div>
+              ))}
+
+              {stages!.map((stage, index) => {
+                const foundActs = getActsForStage(acts, stage);
+                console.log(`Placing acts for stage ${stage.name}`);
                 console.log(foundActs);
-                return foundActs.length >= 1 ? (
-                  foundActs.map((foundAct) => (
+
+                return foundActs.map((foundAct) => {
+                  const actStartDate = new Date(foundAct.start);
+                  const adjustedStartHour =
+                    actStartDate.getHours() >= bounds.start!
+                      ? actStartDate.getHours()
+                      : actStartDate.getHours() + 24;
+                  const diff =
+                    (adjustedStartHour - bounds.start!) * 4 +
+                    actStartDate.getMinutes() / 15 +
+                    1;
+
+                  console.log(`Diff for ${foundAct.start} is ${diff}`);
+
+                  const colStart = index + 2;
+                  const colEnd = index + 3;
+                  const rowStart = diff;
+                  const rowEnd = diff + getSlots(foundAct);
+
+                  return (
                     <div
                       key={foundAct.id}
-                      className={cn("text-center", getRowSpanClass(foundAct))}
+                      className={cn(
+                        "text-center bg-violet-400",
+                        `col-start-${colStart}`,
+                        `col-end-${colEnd}`,
+                        `row-start-${rowStart}`,
+                        `row-end-${rowEnd}`
+                        // getRowSpanClass(foundAct)
+                      )}
                     >
                       {foundAct.artist}
                     </div>
-                  ))
-                ) : (
-                  <div
-                    className="row-span-4 text-center"
-                    key={`${stage.name}-${timeslot}`}
-                  >
-                    None
-                  </div>
-                );
+                  );
+                });
               })}
             </>
-          ))
+          )
         )}
       </div>
     </div>
