@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import DropdownModeToggle from "@/components/DropdownModeToggle";
+import DropdownLogout from "@/components/DropdownLogout";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,7 +50,7 @@ export default function RootLayout({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownLogout />
                 <DropdownModeToggle />
               </DropdownMenuContent>
             </DropdownMenu>
