@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import DropdownLogout from "@/components/DropdownLogout";
+import DropdownModeToggle from "@/components/DropdownModeToggle";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import DropdownModeToggle from "@/components/DropdownModeToggle";
-import DropdownLogout from "@/components/DropdownLogout";
+import Providers from "./providers";
+import { Menu } from "lucide-react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <title>Festival Buddy</title>
+      </head>
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -38,26 +40,28 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="w-full bg-green-600 h-16 flex items-center justify-between p-3">
-            <div className="w-9 h-9 bg-zinc-700 rounded-lg flex items-center justify-center">
-              FB
+          <Providers>
+            <header className="w-full bg-green-600 h-16 flex items-center justify-between p-3">
+              <div className="w-9 h-9 bg-zinc-700 rounded-lg flex items-center justify-center">
+                FB
+              </div>
+              <div>OpenBeatz 2025</div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="w-9 h-9">
+                    <Menu />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownLogout />
+                  <DropdownModeToggle />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </header>
+            <div className="flex items-center justify-center md:h-screen p-4 w-full max-w-[400px] mx-auto">
+              {children}
             </div>
-            <div>OpenBeatz 2025</div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="w-9 h-9">
-                  <Menu />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownLogout />
-                <DropdownModeToggle />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </header>
-          <div className="flex items-center justify-center md:h-screen p-4 w-full max-w-[400px] mx-auto">
-            {children}
-          </div>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

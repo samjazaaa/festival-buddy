@@ -20,7 +20,7 @@ export default function TimetablePage() {
         />
       </div>
       <div className="bg-amber-300 w-full flex flex-col items-center py-3">
-        <Timetable />
+        <Timetable day={day} />
       </div>
     </main>
   );
