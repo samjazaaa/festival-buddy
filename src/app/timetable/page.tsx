@@ -19,7 +19,7 @@ export default function TimetablePage() {
           selectableDays={["Fr", "Sa", "Su"]}
         />
       </div>
-      <div className="bg-amber-300 w-full flex flex-col items-center py-3">
+      <div className="w-full flex flex-col items-center ">
         <Timetable day={day} />
       </div>
     </main>

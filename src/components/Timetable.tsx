@@ -121,13 +121,11 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
       {/* Acts */}
       <div
         className={cn(
-          "grid grid-flow-column grid-cols-7 gap-2 bg-zinc-700 text-white text-xs rounded-b-lg",
-          `[grid-template-rows:repeat(${timeslots.length * 4},_3rem)]`
-          //`grid-rows-${timeslots.length * 4}`
+          "grid grid-flow-row grid-cols-7 gap-2 bg-zinc-700 text-white text-xs rounded-b-lg"
         )}
-        /* style={{
-          gridTemplateRows: `repeat(${timeslots.length * 4}, 3rem)`,
-        }} */
+        style={{
+          gridTemplateRows: `repeat(${timeslots.length * 4}, 1rem)`,
+        }}
       >
         {actsLoading ? (
           <div>Loading...</div>
@@ -136,11 +134,11 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
             <>
               {timeslots.map((timeslot, index) => (
                 <div
-                  className={cn(
-                    "text-center bg-orange-500 col-start-1 flex items-center justify-center ",
-                    `row-start-${index * 4 + 1}`,
-                    `row-end-${index * 4 + 2}`
-                  )}
+                  className="text-center bg-orange-500 col-start-1 flex items-center justify-center"
+                  style={{
+                    gridRowStart: index * 4 + 1,
+                    gridRowEnd: index * 4 + 5,
+                  }}
                   key={timeslot}
                 >
                   {timeslot}:00 Uhr
@@ -173,14 +171,13 @@ const Timetable: FC<TimetableProps> = ({ day }) => {
                   return (
                     <div
                       key={foundAct.id}
-                      className={cn(
-                        "text-center bg-violet-400",
-                        `col-start-${colStart}`,
-                        `col-end-${colEnd}`,
-                        `row-start-${rowStart}`,
-                        `row-end-${rowEnd}`
-                        // getRowSpanClass(foundAct)
-                      )}
+                      className="text-center flex items-center justify-center bg-violet-400"
+                      style={{
+                        gridColumnStart: colStart,
+                        gridColumnEnd: colEnd,
+                        gridRowStart: rowStart,
+                        gridRowEnd: rowEnd,
+                      }}
                     >
                       {foundAct.artist}
                     </div>
